@@ -9,6 +9,15 @@ class CartPage {
       return items.map((item) => item.textContent);
     });
     console.log(items);
+
+    console.assert(
+      items.includes("Sauce Labs Backpack"),
+      "Backpack is missing",
+    );
+    console.assert(
+      items.includes("Sauce Labs Bike Light"),
+      "sauce labs bike is missing",
+    );
   }
 }
 module.exports = CartPage;

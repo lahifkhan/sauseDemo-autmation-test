@@ -2,6 +2,7 @@ const { chromium } = require("playwright");
 const LoginPage = require("../login/LoginPage");
 const InventoryPage = require("../inverntoryPage/inventoryPage");
 const CartPage = require("../cartPage/cartPage");
+const CheckoutPage = require("../checkoutPage/checkout");
 (async () => {
   const browser = await chromium.launch({ headless: false });
   const context = await browser.newContext();
@@ -36,4 +37,24 @@ const CartPage = require("../cartPage/cartPage");
   // });
 
   // console.log(items);
+
+  // go to checkout
+  await page.click("#checkout");
+  await page.waitForSelector(".checkout_info_container");
+
+  //completing the chekcout
+  const checkoutPage = new CheckoutPage(page);
+  checkoutPage.completeForm();
+  checkoutPage.varifyItem();
+
+  // finish the checkout
+  await page.click("#finish");
+
+  await page.waitForURL("https://www.saucedemo.com/checkout-complete.html");
+  const url = await page.url();
+  if (url.includes("checkout-complete.html")) {
+    console.log("checkout done all are complete");
+  } else {
+    console.log("checkout not complete");
+  }
 })();
