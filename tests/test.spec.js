@@ -16,4 +16,8 @@ const InventoryPage = require("../inverntoryPage/inventoryPage");
   const inventoryPage = new InventoryPage(page);
   inventoryPage.addToCart();
   console.log("Items added to cart");
+
+  await page.waitForSelector(".shopping_cart_badge");
+  const isvisible = await page.isVisible(".shopping_cart_badge");
+  console.log(isvisible);
 })();
