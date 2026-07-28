@@ -1,6 +1,7 @@
 const { chromium } = require("playwright");
 const LoginPage = require("../login/LoginPage");
 const InventoryPage = require("../inverntoryPage/inventoryPage");
+const CartPage = require("../cartPage/cartPage");
 (async () => {
   const browser = await chromium.launch({ headless: false });
   const context = await browser.newContext();
@@ -26,10 +27,13 @@ const InventoryPage = require("../inverntoryPage/inventoryPage");
   await page.waitForURL("https://www.saucedemo.com/cart.html");
   console.log("cart open");
 
-  // check all the item in cart
-  const items = await page.$$eval(".inventory_item_name", (items) => {
-    return items.map((item) => item.textContent);
-  });
+  const cartPage = new CartPage(page);
+  cartPage.checkCartItem();
 
-  console.log(items);
+  // // check all the item in cart
+  // const items = await page.$$eval(".inventory_item_name", (items) => {
+  //   return items.map((item) => item.textContent);
+  // });
+
+  // console.log(items);
 })();
