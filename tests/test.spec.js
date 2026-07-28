@@ -20,4 +20,16 @@ const InventoryPage = require("../inverntoryPage/inventoryPage");
   await page.waitForSelector(".shopping_cart_badge");
   const isvisible = await page.isVisible(".shopping_cart_badge");
   console.log(isvisible);
+
+  // open cart
+  await page.click(".shopping_cart_link");
+  await page.waitForURL("https://www.saucedemo.com/cart.html");
+  console.log("cart open");
+
+  // check all the item in cart
+  const items = await page.$$eval(".inventory_item_name", (items) => {
+    return items.map((item) => item.textContent);
+  });
+
+  console.log(items);
 })();
